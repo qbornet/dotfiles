@@ -8,7 +8,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'udalov/kotlin-vim'
 Plugin 'tpope/vim-eunuch'
-Plugin 'editorconfig/editorconfig-vim'
 call vundle#end()
 
 
