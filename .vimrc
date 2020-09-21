@@ -27,4 +27,4 @@ filetype indent on
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
 
-map <F2> :Files<CR>
+map <F2> :FZF<CR>
