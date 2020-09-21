@@ -7,15 +7,9 @@ call vundle#begin()
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'udalov/kotlin-vim'
-Plugin 'tpope/vim-eunuch'
+Plugin 'mg979/vim-visual-multi'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call vundle#end()
-
-
-call plug#begin()
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'terryma/vim-multiple-cursors'
-call plug#end()
 
 
 set cmdheight=2
