@@ -17,6 +17,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
+
+set cmdheight=2
 set nu
 set laststatus=2
 set noshowmode
