@@ -1,30 +1,38 @@
-set nocompatible
+syntax on
 filetype on
+set nocompatible
 set rtp+=~/.vim/bundle/Vundle.vim
 
 
+"plugin ------
 call vundle#begin()
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'udalov/kotlin-vim'
 Plugin 'mg979/vim-visual-multi'
+Plugin 'terroo/vim-simple-emoji'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call vundle#end()
+"plugin ------
 
 
-set cmdheight=2
+"indent	------
+filetype plugin indent on
+set shiftwidth=4
+set tabstop=4
+"indent ------
+
+"visual ------
 set nu
-set laststatus=2
-set noshowmode
-
-
-syntax on
 autocmd InsertEnter * set cul
 autocmd InsertLeave * set nocul
-filetype plugin indent on
-filetype indent on
+"visual ------
 
+"map 	------
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
 
+map <F1> :Stdheader<CR>
 map <F2> :FZF<CR>
+map gm :call cursor(0, virtcol('$')/2)<CR>
+"map 	------
