@@ -11,8 +11,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'terroo/vim-simple-emoji'
 Plugin 'szw/vim-maximizer'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'larsbs/vimterial_dark'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'larsbs/vimterial_dark'
 call vundle#end()
 "plugin ------
 
@@ -25,7 +25,6 @@ set tabstop=4
 
 "visual ------
 set nu
-set	t_Co=256
 set	termguicolors
 set background=dark
 let	g:airline_theme='vimterial_dark'
