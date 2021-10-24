@@ -1,21 +1,13 @@
 #!/bin/zsh
-# File              : .zshrc
-# Author            : Quentin Bornet <quentinbornet@gmail.com>
-# Date              : 03.08.2018
-# Last Modified Date: 03.08.2018
-# Last Modified By  : Quentin Bornet <quentinbornet@gmail.com>
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/quentinbornet/.oh-my-zsh
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
-export PATH=$PATH:/opt/WebDriver/bin
+export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes# See also https://github.com/Falkor/dotfiles/blob/master/oh-my-zsh/
 # Font taken from https://github.com/stefano-meschiari/dotemacs/blob/master/SourceCodePro%2BPowerline%2BAwesome%2BRegular.ttf
-
 
 TERM=xterm-256color
 ZSH_THEME="refined"
@@ -72,10 +64,19 @@ ZSH_THEME="refined"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
+man() {
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+		LESS_TERMCAP_md=$(printf "\e[1;31m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		man "$@"
+}
 
 # User configuration
 
@@ -105,6 +106,5 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias pp='sudo git push'
 
-source /Users/quentinbornet/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH/oh-my-zsh.sh
