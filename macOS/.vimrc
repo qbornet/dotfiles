@@ -36,9 +36,9 @@ colorscheme onedark
 "map 	------
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
+nnoremap t3 :MaximizerToggle<CR>
 
 map <F1>  :Stdheader<CR>
 map <F2>  :FZF<CR>
-map <F3>  :MaximizerToggle<CR>
 map gm :call cursor(0, virtcol('$')/2)<CR>
 "map 	------
