@@ -1,0 +1,81 @@
+[themes]
+file = "semi-native"
+[theme.overrides]
+idle_bg = "#282C34"
+idle_fg = "#F8F8F2"
+good_bg = "#282C34"
+good_fg = "#F8F8F2"
+info_bg = "#61AFEF"
+info_fg = "#F8F8F2"
+warning_bg = "#E5C07B"
+warning_fg = "#F8F8F2"
+critical_bg = "#E06C75"
+critical_fg = "#F8F8F2"
+separator = "\ue0b2"
+separator_bg = "auto"
+separator_fg = "auto"
+
+[icons]
+name = "material-nf"
+[icons.overrides]
+bat_full = ""
+bat_three_quarters = ""
+bat_half = ""
+bat_quarter = ""
+bat_empty = ""
+bat_charging = ""
+cpu = ""
+net_wireless = "直"
+net_up = "直"
+net_down = "睊"
+time = ""
+memory_mem = ""
+volume_full =  "墳"
+volume_half =  "奔"
+volume_empty = "奄"
+volume_muted = "ﱝ"
+headphones = ""
+
+[[block]]
+block = "net"
+device = "wlo1"
+interval = 5
+format = " {ssid} {signal_strength}"
+
+[[block]]
+block = "battery"
+device = "/sys/class/power_supply/BAT0"
+driver = "sysfs"
+interval = 10
+full_threshold = 100
+good = 80
+info = 50
+warning = 15
+critical = 5
+format = "{percentage}"
+
+[[block]]
+block = "cpu"
+interval = 1
+format = "{utilization}"
+
+[[block]]
+block = "memory"
+format_mem = "{mem_used}/{mem_used_percents}"
+display_type = "memory"
+icons = true
+
+[[block]]
+block = "sound"
+driver = "pulseaudio"
+max_vol = 100
+headphones_indicator = true
+format = "{volume}"
+
+[[block]]
+block = "time"
+format = "%X %v"
+interval = 1
+timezone = "Europe/Paris"
+locale = "fr_FR"
+
