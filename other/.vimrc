@@ -11,8 +11,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'terroo/vim-simple-emoji'
 Plugin 'szw/vim-maximizer'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plugin 'larsbs/vimterial_dark'
+Plugin 'joshdick/onedark.vim'
 call vundle#end()
 "plugin ------
 
@@ -24,21 +23,22 @@ set tabstop=4
 "indent ------
 
 "visual ------
-set nu
-set	termguicolors
-set background=dark
-let	g:airline_theme='vimterial_dark'
-colorscheme vimterial_dark
 autocmd InsertEnter * set cul
 autocmd InsertLeave * set nocul
+set nu
+set	termguicolors
+let g:onedark_hide_endofbuffer=1
+let g:onedark_termcolors=256
+let g:airline_theme='onedark'
+colorscheme onedark
 "visual ------
+
 
 "map 	------
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
+nnoremap t3 :MaximizerToggle<CR>
 
 map <F1>  :Stdheader<CR>
-map <F2>  :FZF<CR>
-map <F3>  :MaximizerToggle<CR>
 map gm :call cursor(0, virtcol('$')/2)<CR>
-"map 	------
+"
