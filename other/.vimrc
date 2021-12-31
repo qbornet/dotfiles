@@ -37,6 +37,7 @@ colorscheme onedark
 "map 	------
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
+nnoremap gb ``
 nnoremap t3 :MaximizerToggle<CR>
 
 map <F1>  :Stdheader<CR>
