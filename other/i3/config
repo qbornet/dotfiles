@@ -180,6 +180,7 @@ bindsym $mod+r mode "resize"
 
 #i3-gaps
 for_window [class=".*"] border pixel 0
+for_window [class="Alacritty"] border pixel 1
 gaps outer 1
 gaps inner 8
 smart_gaps on

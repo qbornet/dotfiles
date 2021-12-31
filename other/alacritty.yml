@@ -110,8 +110,8 @@ font:
     #style: Regular
 
   # Bold font face
-  bold:
-    family: FiraCode NF
+  #bold:
+  #family: FiraCode NF
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
@@ -131,7 +131,8 @@ font:
     #style: Italic
 
   # Bold italic font face
-  #bold_italic:
+  bold_italic:
+    family: FiraCode NF
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
@@ -141,7 +142,7 @@ font:
     # The `style` can be specified to pick a specific face.
     #style: Bold Italic
 
-  size: 8.5
+  size: 7.85
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
