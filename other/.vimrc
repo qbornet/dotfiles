@@ -26,6 +26,7 @@ Plugin 'terroo/vim-simple-emoji'
 Plugin 'szw/vim-maximizer'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'joshdick/onedark.vim'
+Plugin 'tpope/vim-dispatch'
 call vundle#end()
 "plugin ------
 
@@ -65,8 +66,10 @@ map gm :call cursor(0, virtcol('$')/2)<CR>
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
 nnoremap gb ``
+nnoremap tc :Make <CR>
+nnoremap tn :cn <CR>
+nnoremap tp :cp <CR>
 nnoremap t3 :MaximizerToggle<CR>
-" faire les bind pour les quickfix (:help make)
 
 map <F1>  :Stdheader<CR>
 "map 	------
