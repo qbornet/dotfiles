@@ -25,8 +25,9 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'terroo/vim-simple-emoji'
 Plugin 'szw/vim-maximizer'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'joshdick/onedark.vim'
+Plugin '42Paris/42header'
 Plugin 'tpope/vim-dispatch'
+Plugin 'joshdick/onedark.vim'
 call vundle#end()
 "plugin ------
 
@@ -50,6 +51,7 @@ augroup END
 autocmd InsertEnter * set cul
 autocmd InsertLeave * set nocul
 set	termguicolors
+set hlsearch
 let g:onedark_hide_endofbuffer=1
 let g:onedark_termcolors=256
 let g:airline_theme='onedark'
@@ -66,14 +68,34 @@ map gm :call cursor(0, virtcol('$')/2)<CR>
 inoremap jk <ESC>
 inoremap {<CR> {<CR>}<C-o>O
 nnoremap gb ``
-nnoremap tc :Make <CR>
-nnoremap tn :cn <CR>
-nnoremap tp :cp <CR>
 nnoremap t3 :MaximizerToggle<CR>
+nnoremap ts :nohlsearch <CR>
 
 map <F1>  :Stdheader<CR>
 "map 	------
 
+"qfix	------
+nnoremap tc :Make <CR>
+nnoremap tp :cprevious <CR>
+nnoremap tn :cnext <CR>
+"qfix	------
+
+"buffer	------
+set	swb=useopen
+
+nnoremap gn :bn <CR>
+nnoremap gp :bp <CR>
+"buffer	------
+
 "ctags	------
 autocmd BufWritePost *.c,*.h silent! !ctags . &
+autocmd BufWritePost *.cpp,*.hpp silent! !ctags . &
+
+nnoremap ta :tnext <CR>
+nnoremap tb :tprev <CR>
 "ctags	------
+
+"skel   ------
+autocmd BufNewFile Makefile 0r ~/.vim/templates/Makefile.template | :normal Gddgg
+autocmd BufNewFile main.cpp 0r ~/.vim/templates/main.template.cpp | :normal Gddgg
+"skel   ------
