@@ -82,9 +82,9 @@ nnoremap tn :cnext <CR>
 
 "buffer	------
 set	swb=useopen
+set hidden
 
-nnoremap gn :bn <CR>
-nnoremap gp :bp <CR>
+nnoremap <F5> :buffers <CR>
 "buffer	------
 
 "ctags	------
