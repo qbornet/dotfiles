@@ -1,2 +1,2 @@
 # dotfiles
-![My DESKTOP](/other/png/desktop,png)
+![My DESKTOP](/other/png/desktop.png)
