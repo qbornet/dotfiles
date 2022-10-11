@@ -11,11 +11,12 @@ if empty(glob("~/.vim/bundle/Vundle.vim"))
 endif
 " ----------------------------------------
 
-syntax on
+if empty($ATHOME)
+	syntax on
+endif
 filetype on
 set nocompatible
 set rtp+=~/.vim/bundle/Vundle.vim
-
 
 
 "plugin ------
@@ -24,13 +25,62 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'terroo/vim-simple-emoji'
 Plugin 'szw/vim-maximizer'
-Plugin 'sheerun/vim-polyglot'
 Plugin '42Paris/42header'
 Plugin 'tpope/vim-dispatch'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'wellle/targets.vim'
+if !empty($ATHOME)
+	Plugin 'ycm-core/YouCompleteMe'
+endif
 Plugin 'joshdick/onedark.vim'
 call vundle#end()
 "plugin ------
 
+" YouCompleteMe options
+" Honestly this shit is overkill for my usage
+" I actually need something looking more like this:
+" https://github.com/jackguo380/vim-lsp-cxx-highlight
+" The probleme is that most of the other semantic highlighting are not good.
+" To me personally, some are pure dogshit no offense, 
+" and other are just lacking in general they dont have the little plus that makes it good, 
+" so yeah overkill but statisfying :>
+"ycm	------
+if !empty($ATHOME)
+	"set to 1 for sementic highlighting
+	let g:ycm_enable_semantic_highlighting = 1
+	"set to 0 disable diagnostic ui
+	let g:ycm_show_diagnostics_ui = 0
+	"set to have the diagnostic text on the right side
+	"let g:ycm_echo_current_diagnostic = 'virtual-text'
+	"set to '' disable autohover
+	let g:ycm_auto_hover=''
+	"set to 0 disable AUTO COMPLETE YEEEEEAH
+	let g:ycm_auto_trigger = 0
+endif
+
+" This is need to customize the color  on specific keyword
+" :h group-name are use to highlight the color of specific keyword.
+if !empty($ATHOME)
+	let MY_YCM_HIGHLIGHT_GROUP = {
+		  \   'typeParameter': 'PreProc',
+		  \   'parameter': 'Normal',
+		  \   'variable': 'Normal',
+		  \   'property': 'Normal',
+		  \   'enumMember': 'Normal',
+		  \   'event': 'Special',
+		  \   'member': 'Normal',
+		  \   'method': 'Normal',
+		  \   'class': 'Function',
+		  \   'namespace': 'Constant',
+		  \ }
+
+	" Add the above custom colors (colorscheme colors)
+	for tokenType in keys( MY_YCM_HIGHLIGHT_GROUP )
+	  call prop_type_add( 'YCM_HL_' . tokenType,
+						\ { 'highlight': MY_YCM_HIGHLIGHT_GROUP[ tokenType ] } )
+	endfor
+endif
+"ycm	------
 
 "indent	------
 filetype plugin indent on
@@ -88,8 +138,7 @@ nnoremap <F5> :buffers <CR>
 "buffer	------
 
 "ctags	------
-autocmd BufWritePost *.c,*.h silent! !ctags . &
-autocmd BufWritePost *.cpp,*.hpp silent! !ctags . &
+autocmd BufWritePost *.c,*.h,*.cpp,*.hpp silent! !ctags . &
 
 nnoremap ta :tnext <CR>
 nnoremap tb :tprev <CR>
@@ -98,4 +147,5 @@ nnoremap tb :tprev <CR>
 "skel   ------
 autocmd BufNewFile Makefile 0r ~/.vim/templates/Makefile.template | :normal Gddgg
 autocmd BufNewFile main.cpp 0r ~/.vim/templates/main.template.cpp | :normal Gddgg
+autocmd BufNewFile .ccls 0r ~/.vim/templates/main.template.cpp | :normal Gddgg
 "skel   ------
