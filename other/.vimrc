@@ -144,8 +144,3 @@ nnoremap ta :tnext <CR>
 nnoremap tb :tprev <CR>
 "ctags	------
 
-"skel   ------
-autocmd BufNewFile Makefile 0r ~/.vim/templates/Makefile.template | :normal Gddgg
-autocmd BufNewFile main.cpp 0r ~/.vim/templates/main.template.cpp | :normal Gddgg
-autocmd BufNewFile .ccls 0r ~/.vim/templates/main.template.cpp | :normal Gddgg
-"skel   ------
