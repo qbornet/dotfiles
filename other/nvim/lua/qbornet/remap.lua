@@ -5,6 +5,7 @@ vim.keymap.set("n", "gb", "``", { noremap = true }) -- nnoremap gb ``
 vim.keymap.set("n", "ts", vim.cmd.nohlsearch, { noremap = true }) -- nnoremap ts nohlsearch
 vim.keymap.set("i", "jk", "<Esc>", { noremap = true }) -- inoremap jk <Esc>
 vim.keymap.set("n", "<leader>l", vim.cmd.buffers, { noremap = true }) --nnoremap <leader>l :buffers <CR>
+vim.keymap.set("i", "{<CR>", "{<CR>}<C-o>O", { noremap = true }) -- inoremap {<CR> {<CR>}<C-o>O
 
 -- MaximizeWindow remove keymap that could use :only
 vim.keymap.set("n", "t3", ":lua MaximizeToggle()<CR>", { noremap = true, silent = true })
