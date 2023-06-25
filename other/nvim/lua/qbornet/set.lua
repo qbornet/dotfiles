@@ -5,7 +5,6 @@ vim.opt.relativenumber = true
 vim.g.netrw_bufsettings = "noma nomod nu relativenumber nobl nowrap ro"
 
 vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
