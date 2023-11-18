@@ -49,7 +49,5 @@ return require('packer').startup(function(use)
         config = function() require('oil').setup() end
     }
     use 'nvim-lua/plenary.nvim'
-    use 'jose-elias-alvarez/null-ls.nvim'
-
 
 end)

@@ -24,7 +24,6 @@ require("oil").setup({
     restore_win_options = true,
     skip_confirm_for_simple_edits = true,
     delete_to_trash = true,
-    trash_command = "rm -rf",
     prompt_save_on_select_new_entry = true,
 
       keymaps = {
@@ -50,7 +49,7 @@ require("oil").setup({
       end,
       -- This function defines what will never be shown, even when `show_hidden` is set
       is_always_hidden = function(name, bufnr)
-          return false
+          return name == ".."
       end,
   },
   -- Configuration for the actions floating preview window
