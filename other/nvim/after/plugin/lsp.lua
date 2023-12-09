@@ -41,6 +41,14 @@ lsp.on_attach(function(client, bufnr)
 
 end)
 
+-- disable semantic highlights
+lsp.set_server_config({
+  on_init = function(client)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+})
+
+
 -- add null_ls so my lsp is not doing the vim.lsp.buffer.format() function call
 lsp.format_on_save({
     format_opts = {
