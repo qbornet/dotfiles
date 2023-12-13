@@ -42,8 +42,8 @@ vim.keymap.set("n", "<leader>f", require("oil").open, { desc = "Open parent dire
 
 -- dapui
 
-vim.keymap.set("n", "<C-x><C-a>", require('dapui').open, { desc = "Open dapui"})
-vim.keymap.set("n", "<C-x><C-q>", require('dapui').close, { desc = "Close dapui"})
+vim.keymap.set("n", "<leader>o", require('dapui').open, { desc = "Open dapui"})
+vim.keymap.set("n", "<leader>q", require('dapui').close, { desc = "Close dapui"})
 vim.keymap.set("n", "<leader>tg", require('dapui').toggle, { noremap = true, desc = "Toggle dapui"})
 vim.keymap.set("n", "<leader>i", require('dapui').float_element, { noremap = true, desc = "Inspect element dapui"})
 vim.keymap.set("v", "<leader>e", require('dapui').eval, { noremap = true, desc = "Eval expression dapui"})
