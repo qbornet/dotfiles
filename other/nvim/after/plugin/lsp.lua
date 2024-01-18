@@ -3,13 +3,6 @@ local lsp = require('lsp-zero').preset({})
 
 lsp.preset("recommended")
 
-lsp.ensure_installed({
-	'tsserver',
-	'clangd',
-	'lua_ls',
-	'pyre'
-})
-
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -29,9 +22,17 @@ vim.diagnostic.config({
 	virtual_text = false,
 })
 
+-- this is local variable is used for modifying filetype on lsp
+local servers = {
+    clangd = {
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda'}
+    },
+}
+
 lsp.on_attach(function(client, bufnr)
 	local opts = {buffer = bufnr, remap = false}
 	local options = { reuse_win = true }
+    lsp.default_keymaps({buffer = bufnr})
 	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition(options) end, opts)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
 	vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
@@ -41,12 +42,27 @@ lsp.on_attach(function(client, bufnr)
 
 end)
 
+-- if you want to modify installed lsp
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {'tsserver', 'clangd', 'gopls'},
+    handlers = {
+        lsp.default_setup,
+        clangd = function()
+            require('lspconfig').clangd.setup({
+                filetypes = servers.clangd.filetypes
+            })
+        end,
+    }
+})
+
 -- disable semantic highlights
 lsp.set_server_config({
   on_init = function(client)
     client.server_capabilities.semanticTokensProvider = nil
   end,
 })
+
 
 
 -- add null_ls so my lsp is not doing the vim.lsp.buffer.format() function call
