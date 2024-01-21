@@ -2,12 +2,39 @@
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
+Handle = io.popen("lsb_release -a 2> /dev/null | cut -d ':' -f2 | tr -d '\t' | grep ^Ubuntu$ | tr -d '\n'")
+Distro = Handle:read("*a")
 
 return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
-	use 'navarasu/onedark.nvim'
+    if Distro == "Ubuntu" then
+
+        use {
+            'navarasu/onedark.nvim',
+            run = function()
+                pcall(vim.cmd, 'PackerSync')
+            end,
+        }
+
+    else
+
+        use {
+            "catppuccin/nvim",
+            as = "catppuccin",
+            run = function()
+                pcall(vim.cmd, 'PackerSync')
+            end,
+        }
+
+    end
+
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.5',
+        -- or                            , branch = '0.1.x',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
 
 	use {
 		'nvim-treesitter/nvim-treesitter',
@@ -48,7 +75,6 @@ return require('packer').startup(function(use)
         'stevearc/oil.nvim',
         config = function() require('oil').setup() end
     }
-    use 'nvim-lua/plenary.nvim'
 
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
