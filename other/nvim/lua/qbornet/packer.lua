@@ -1,9 +1,22 @@
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
+
+local packer_bootstrap = ensure_packer()
+Handle = io.popen("lsb_release -a 2> /dev/null | cut -d ':' -f2 | tr -d '\t' | grep ^Ubuntu$ | tr -d '\n'")
+Distro = Handle:read("*a")
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
-Handle = io.popen("lsb_release -a 2> /dev/null | cut -d ':' -f2 | tr -d '\t' | grep ^Ubuntu$ | tr -d '\n'")
-Distro = Handle:read("*a")
 
 return require('packer').startup(function(use)
 	-- Packer can manage itself
@@ -78,6 +91,13 @@ return require('packer').startup(function(use)
 
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
-    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
     use { "folke/neodev.nvim", opts = {} }
+    use 'ray-x/go.nvim'
+    use 'gpanders/nvim-parinfer'
+    use { 'm00qek/baleia.nvim', tag = 'v1.4.0' }
+    use 'motosir/skel-nvim' -- check the github page for substitution on skeleton
+	if packer_bootstrap then
+		require('packer').sync()
+	end
 end)

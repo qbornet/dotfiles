@@ -1,4 +1,3 @@
-
 local lsp = require('lsp-zero').preset({})
 
 lsp.preset("recommended")
@@ -8,8 +7,7 @@ local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
 	['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
 	['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-	['<C-Space>'] = cmp.mapping.confirm({ select = true })
-})
+	['<C-Space>'] = cmp.mapping.confirm({ select = true }) })
 
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
@@ -45,7 +43,7 @@ end)
 -- if you want to modify installed lsp
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = {'tsserver', 'clangd', 'gopls'},
+    ensure_installed = {'tsserver', 'clangd', 'gopls', 'lua_ls', 'pyright'},
     handlers = {
         lsp.default_setup,
         clangd = function()
@@ -65,15 +63,12 @@ lsp.set_server_config({
 
 
 
--- add null_ls so my lsp is not doing the vim.lsp.buffer.format() function call
+-- lsp is not doing the vim.lsp.buffer.format() function call
 lsp.format_on_save({
     format_opts = {
         async = false,
         timeout_ms = 10000,
     },
-    server = {
-        ['null_ls'] = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx", "graphql", "handlebars" },
-    }
 })
 
 lsp.setup()
