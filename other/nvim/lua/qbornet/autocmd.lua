@@ -21,15 +21,7 @@ vim.api.nvim_create_autocmd(
 { pattern = "*", command = "set cursorline", group = cursorGrp}
 )
 
--- ctags
-vim.api.nvim_create_autocmd(
-{ "BufWritePost" },
-{ pattern = { "*.c", "*.h", "*.cpp", "*.hpp" }, command = "silent! !ctags . &" }
-)
-
 -- colorized ansi
-
-
 vim.api.nvim_create_autocmd(
 { "BufWinEnter" },
 {

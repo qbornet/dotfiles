@@ -97,6 +97,10 @@ return require('packer').startup(function(use)
     use 'gpanders/nvim-parinfer'
     use { 'm00qek/baleia.nvim', tag = 'v1.4.0' }
     use 'motosir/skel-nvim' -- check the github page for substitution on skeleton
+    use {
+        'nvimtools/none-ls.nvim',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
 	if packer_bootstrap then
 		require('packer').sync()
 	end

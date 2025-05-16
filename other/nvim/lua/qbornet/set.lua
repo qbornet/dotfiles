@@ -21,6 +21,6 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 6
 
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "110"
+vim.opt.colorcolumn = "80"
 
 --vim.opt.switchbuf = "useopen"

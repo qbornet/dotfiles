@@ -13,7 +13,7 @@ require("skel-nvim").setup{
         ['main.zig'] = 'main-zig.skel',
         ['*.h'] = 'new-h.skel',
         ['*.hpp'] = 'new-hpp.skel', -- could be cool to use regexp instead of wildcard only '*'
-        ['main.c'] = 'main-c.skel',
+        ['main.c'] = {'main-c.skel', '.clang-format', '.clang-tidy' },
         ['main.cpp'] = 'main-cpp.skel',
     },
     substitutions = {

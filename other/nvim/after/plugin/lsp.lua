@@ -1,19 +1,16 @@
-local lsp = require('lsp-zero').preset({})
-
-lsp.preset("recommended")
-
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-	['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-	['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-	['<C-Space>'] = cmp.mapping.confirm({ select = true }) })
-
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
-
-lsp.setup_nvim_cmp({
-	mapping = cmp_mappings
+-- modified lsp zero
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('user_lsp_attach', {clear = true}),
+    callback = function(event)
+        local opts = { buffer = event.buf }
+        local options = { reuse_win = true }
+        vim.keymap.set("n", "gd", function() vim.lsp.buf.definition(options) end, opts)
+        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+        vim.keymap.set("n", "<leader>dn", function() vim.diagnostic.goto_next() end, opts)
+        vim.keymap.set("n", "<leader>dp", function() vim.diagnostic.goto_prev() end, opts)
+        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+    end
 })
 
 vim.diagnostic.config({
@@ -27,48 +24,108 @@ local servers = {
     },
 }
 
-lsp.on_attach(function(client, bufnr)
-	local opts = {buffer = bufnr, remap = false}
-	local options = { reuse_win = true }
-    lsp.default_keymaps({buffer = bufnr})
-	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition(options) end, opts)
-	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-	vim.keymap.set("n", "<leader>dn", function() vim.diagnostic.goto_next() end, opts)
-	vim.keymap.set("n", "<leader>dp", function() vim.diagnostic.goto_prev() end, opts)
-	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-end)
+-- lspconfig is required for clangd weird behavior with mason-lspconfig.
+require('lspconfig').clangd.setup({
+    capabilities = lsp_capabilities,
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--clang-tidy-checks=-*,readability-identifier-naming",
+        "--header-insertion=iwyu",
+        "--completion-style=detailed",
+    },
+    filetypes = servers.clangd.filestypes,
+})
 
--- if you want to modify installed lsp
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = {'tsserver', 'clangd', 'gopls', 'lua_ls', 'pyright'},
+    ensure_installed = { 'lua_ls', 'clangd' },
+    automatic_enable = true,
     handlers = {
-        lsp.default_setup,
-        clangd = function()
-            require('lspconfig').clangd.setup({
-                filetypes = servers.clangd.filetypes
+        function(server_name)
+            require('lspconfig')[server_name].setup({
+                capabilities = lsp_capabilities,
             })
         end,
+        lua_ls = function()
+            require('lspconfig').lua_ls.setup({
+                capabilities = lsp_capabilities,
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT'
+                        },
+                        diagnostics = {
+                            globals = {'vim'},
+                        },
+                        workspace = {
+                            library = {
+                                vim.env.VIMRUNTIME,
+                            }
+                        }
+                    }
+                }
+            })
+        end
     }
 })
 
--- disable semantic highlights
-lsp.set_server_config({
-  on_init = function(client)
-    client.server_capabilities.semanticTokensProvider = nil
-  end,
-})
 
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
-
--- lsp is not doing the vim.lsp.buffer.format() function call
-lsp.format_on_save({
-    format_opts = {
-        async = false,
-        timeout_ms = 10000,
+cmp.setup({
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    }, {
+        {name = 'buffer'},
+    }),
+    mapping = cmp.mapping.preset.insert({
+        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-space>'] = cmp.mapping.complete(),
+        ['<Tab>'] = nil,
+        ['<S-Tab>'] = nil,
+    }),
+    snippet = {
+        expand = function(args)
+            vim.snippet.expand(args.body)
+        end
     },
 })
 
-lsp.setup()
+local null_ls = require('null-ls')
+local augroup = vim.api.nvim_create_augroup("LspFormating", {})
+local clang_format_file = vim.fn.expand("~/.config/nvim/skeleton/.clang-format")
+
+null_ls.setup({
+    debug = false,
+   on_attach = function(client, bufnr)
+       if client.supports_method("textDocument/formatting") then
+           vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+           vim.api.nvim_create_autocmd("BufWritePre", {
+               group = augroup,
+               buffer = bufnr,
+               callback = function()
+                   vim.lsp.buf.format({
+                       bufnr = bufnr,
+                       filter = function(client)
+                           return client.name == "null-ls"
+                       end
+                   })
+               end
+           })
+       end
+   end,
+   sources = {
+       null_ls.builtins.formatting.clang_format.with({
+           extra_args = {
+               "--style=file:" .. clang_format_file,
+           },
+       }),
+   }
+})
