@@ -2,6 +2,7 @@ vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20"
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
+vim.opt.scl = "yes"
 vim.g.netrw_bufsettings = "noma nomod nu relativenumber nobl nowrap ro"
 
 vim.opt.tabstop = 4

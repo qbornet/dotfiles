@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.diagnostic.config({
 	virtual_text = false,
+    update_in_insert = true,
 })
 
 -- this is local variable is used for modifying filetype on lsp
