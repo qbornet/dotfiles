@@ -24,7 +24,7 @@ font-family = Agava Nerd Font
 font-style = default
 font-feature = -calt
 font-size = 16
-theme = catppuccin-macchiato
+theme = Catppuccin Macchiato
 
 shell-integration-features = "no-cursor"
 cursor-style = "block"
