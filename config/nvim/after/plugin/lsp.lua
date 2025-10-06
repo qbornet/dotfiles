@@ -26,13 +26,10 @@ local servers = {
 }
 
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lsp_config = vim.lsp.config()
-
-print(lsp_config)
 
 
 -- lspconfig is required for clangd weird behavior with mason-lspconfig.
-vim.lsp.config().clangd.setup({
+require('lspconfig').clangd.setup({
     capabilities = lsp_capabilities,
     cmd = {
         "clangd",
@@ -51,12 +48,12 @@ require('mason-lspconfig').setup({
     automatic_enable = true,
     handlers = {
         function(server_name)
-            vim.lsp.config()[server_name].setup({
+            require('lspconfig')[server_name].setup({
                 capabilities = lsp_capabilities,
             })
         end,
         lua_ls = function()
-            vim.lsp.config().lua_ls.setup({
+            require('lspconfig').lua_ls.setup({
                 capabilities = lsp_capabilities,
                 settings = {
                     Lua = {
