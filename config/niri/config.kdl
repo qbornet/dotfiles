@@ -26,6 +26,24 @@ output "DP-5" {
 	position x=-2560 y=0
 }
 
+gestures {
+    hot-corners { 
+        off
+    }
+}
+
+cursor {
+    xcursor-theme "BreezeX-RosePine-Linux"
+    xcursor-size 24
+}
+
+window-rule {
+    open-maximized true
+    draw-border-with-background false
+    geometry-corner-radius 14
+    clip-to-geometry true
+}
+
 layout {
     gaps 16
     center-focused-column "never"
@@ -77,6 +95,7 @@ binds {
 	Mod+J { focus-window-down; }
 	Mod+K { focus-window-up; }
 	Mod+L { focus-column-right; }
+    Mod+V { toggle-window-floating; }
 
 	// Workspace management
 	Mod+1 { focus-workspace 1; }
@@ -129,7 +148,10 @@ binds {
 
 	// Applications launchers
 	Mod+Return repeat=false { spawn "ghostty"; }
-	Mod+D repeat=false { spawn "fuzzel"; }
+	Mod+D repeat=false { spawn "sh" "-c" "env DISPLAY=:0 fuzzel"; }
+
+    // Mako keybind
+    Ctrl+Space repeat=false { spawn "sh" "-c" "makoctl dismiss -a"; }
 
 	// Screenshots
 	Print { screenshot; }
@@ -148,3 +170,7 @@ binds {
     XF86MonBrightnessUp { spawn "brightnessctl" "set" "10%+"; }
     XF86MonBrightnessDown { spawn "brightnessctl" "set" "10%-"; }
 }
+
+//debug {
+//    wait-for-frame-completion-in-pipewire
+//}
