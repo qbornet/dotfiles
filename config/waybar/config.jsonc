@@ -7,7 +7,7 @@
   "gtk-layer-shell": true,
   "passthrough": false,
   "fixed-center": true,
-  "modules-left": ["niri/workspaces", "niri/window"],
+  "modules-left": ["niri/workspaces"],
   "modules-center": ["mpris"],
   "modules-right": [
     "cpu",
@@ -31,13 +31,20 @@
   },
   "niri/workspaces": {
     "on-click": "activate",
-    "format": "{id}",
+    "format": "{icon}",
+    "format-icons": {
+        // Named workspaces
+        // (you need to configure them in niri)
+        "browser": "",
+        "discord": "󰙯",
+
+        // Icons by state
+        "active": "",
+        "default": ""
+    },
     "all-outputs": true,
     "disable-scroll": false,
     "active-only": false,
-  },
-  "niri/window": {
-    "format": "{title}",
   },
   "tray": {
     "show-passive-items": true,
