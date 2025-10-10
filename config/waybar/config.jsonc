@@ -34,17 +34,17 @@
     "format": "{icon}",
     "format-icons": {
         // Named workspaces
-        // (you need to configure them in niri)
-        "browser": "",
+        "ghostty": "󰊠",
+        "browser": "󰊯",
         "discord": "󰙯",
 
         // Icons by state
         "active": "",
-        "default": ""
+        "default": "",
     },
-    "all-outputs": true,
+    "all-outputs": false,
+    "current-only": false,
     "disable-scroll": false,
-    "active-only": false,
   },
   "tray": {
     "show-passive-items": true,

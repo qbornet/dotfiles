@@ -19,6 +19,8 @@ window#waybar {
   padding: 0.3rem 0.6rem;
   margin: 0.4rem 0.25rem;
   border-radius: 6px;
+  min-width: 30px;
+  text-align: center;
   /* background-color: #181825; */
   background-color: #1e1e2e;
   color: #cdd6f4;

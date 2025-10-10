@@ -34,8 +34,8 @@ return require('packer').startup(function(use)
     else
 
         use {
-            "catppuccin/nvim",
-            as = "catppuccin",
+            "rose-pine/neovim",
+            as = "rose-pine",
             run = function()
                 pcall(vim.cmd, 'PackerSync')
             end,
