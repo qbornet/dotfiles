@@ -37,12 +37,41 @@ cursor {
     xcursor-size 24
 }
 
+workspace "browser" {
+    open-on-output "DP-5"
+}
+
+workspace "ghostty" {
+    open-on-output "DP-4"
+}
+
+workspace "discord" {
+    open-on-output "DP-4"
+}
+
 window-rule {
     open-maximized true
     draw-border-with-background false
     geometry-corner-radius 14
     clip-to-geometry true
 }
+
+window-rule {
+    match at-startup=true app-id="google-chrome"
+    open-on-workspace "browser"
+}
+
+window-rule {
+    match at-startup=true app-id="discord-ptb"
+    open-on-workspace "discord"
+}
+
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty"#
+    open-maximized false
+    open-on-workspace "ghostty"
+}
+
 
 layout {
     gaps 16

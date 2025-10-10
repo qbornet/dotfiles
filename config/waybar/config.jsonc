@@ -40,7 +40,7 @@
 
         // Icons by state
         "active": "",
-        "default": "",
+        "default": "",
     },
     "all-outputs": false,
     "current-only": false,
