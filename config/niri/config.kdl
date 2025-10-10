@@ -169,6 +169,7 @@ binds {
 	Mod+Ctrl+Shift+J { move-column-to-monitor-down; }
 	Mod+Ctrl+Shift+K { move-column-to-monitor-up; }
 
+
 	// Window sizing
 	Mod+Minus { set-column-width "-10%"; }
 	Mod+Equal { set-column-width "+10%"; }
@@ -181,6 +182,9 @@ binds {
 
     // Mako keybind
     Ctrl+Space repeat=false { spawn "sh" "-c" "makoctl dismiss -a"; }
+
+    // Lock Screen
+    Mod+P repeat=false { spawn "sh" "-c" "swaylock -C <(cat ~/.config/swaylock/config)"; }
 
 	// Screenshots
 	Print { screenshot; }
