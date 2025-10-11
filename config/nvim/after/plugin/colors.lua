@@ -3,7 +3,7 @@ function ColorMyPencils(color)
     if Distro == "Ubuntu" then
         color = color or "onedark"
     else
-        color = color or "catppuccin-macchiato"
+        color = color or "rose-pine"
     end
 
 	vim.cmd.colorscheme(color)

@@ -63,25 +63,15 @@ return require('packer').startup(function(use)
 	}
 
 	use {
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v2.x',
-		requires = {
-			-- LSP Support
-			{'neovim/nvim-lspconfig'},             -- Required
-			{                                      -- Optional
 				'williamboman/mason.nvim',
 				run = function()
 					pcall(vim.cmd, 'MasonUpdate')
 				end,
-			},
-			{'williamboman/mason-lspconfig.nvim'}, -- Optional
-
-			-- Autocompletion
-			{'hrsh7th/nvim-cmp'},     -- Required
-			{'hrsh7th/cmp-nvim-lsp'}, -- Required
-			{'L3MON4D3/LuaSnip'},     -- Required
-		}
-	}
+    }
+    use {'williamboman/mason-lspconfig.nvim'}
+	use {'hrsh7th/nvim-cmp'}
+    use {'hrsh7th/cmp-nvim-lsp'}
+    use {'L3MON4D3/LuaSnip'}     
 
     use 'nvim-tree/nvim-web-devicons'
     use {
@@ -92,7 +82,15 @@ return require('packer').startup(function(use)
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
-    use { "folke/neodev.nvim", opts = {} }
+    use {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    }
     use 'ray-x/go.nvim'
     use 'gpanders/nvim-parinfer'
     use { 'm00qek/baleia.nvim', tag = 'v1.4.0' }
