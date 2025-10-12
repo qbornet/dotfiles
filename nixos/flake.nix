@@ -28,6 +28,7 @@
       flake = false;
     };
   };
+
   outputs = inputs@{ self, nixpkgs, ... }:
   let
     system = "x86_64-linux";
@@ -40,6 +41,7 @@
           ghostty = inputs.ghostty.packages.${system}.default;
         };
       };
+
       # NixOS configuration required to run properly
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -51,12 +53,13 @@
           dotfiles = inputs.dotfiles;
         };
         modules = [
-          ./configuration.nix
           {
             nixpkgs.overlays = [
               self.overlays.default
             ];
           }
+
+          ./configuration.nix
 
           inputs.home-manager.nixosModules.home-manager
           {
@@ -66,6 +69,7 @@
             home-manager.users.qbornet = import ./confs/home.nix;
             home-manager.extraSpecialArgs = {
               dotfiles = inputs.dotfiles;
+              inputs = inputs;
             };
           }
         ];

@@ -50,6 +50,7 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  # systemd.services.user
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -85,6 +86,7 @@
   # Programs default package install to change
   programs.vim.package = pkgs.vim-full;
 
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.qbornet = {
     isNormalUser = true;
@@ -92,14 +94,31 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       git
+      zip
+      gcc
+      unzip
       neovim
+      ripgrep
       ghostty
-      clang_18
+      starship
+      clang_19
+      glibc.dev
       python3Full
+      discord-ptb
+      rose-pine-cursor
       pkgs-unstable.zig
       google-chrome-stable
-      discord-ptb
+
+      # LSP
+      #lua-language-server
+      #clang-tools
+      #zls
     ];
+  };
+
+  programs.bash.shellAliases = {
+    gcl = "git clone";
+    v = "nvim";
   };
 
   # Install firefox.
@@ -108,10 +127,35 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+
   environment.systemPackages = with pkgs; [
-  	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  	vim
   	wget
+    niri
+    mako
+    btop
+    fuzzel
+    waybar
+    wlogout
+    killall
+    swaylock
+    librewolf
+    playerctl
+    pavucontrol
+    xwayland-satellite
   ];
+
+  # Enable ld
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+  ];
+
+  # Enable swaylock
+  security.pam.services.swaylock = {};
+
+  # Install niri.
+  programs.niri.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -139,5 +183,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
