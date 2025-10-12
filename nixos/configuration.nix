@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports =
@@ -12,7 +12,11 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-f772a076-bd9f-4583-93c7-e5b0f944c9b9".device = "/dev/disk/by-uuid/f772a076-bd9f-4583-93c7-e5b0f944c9b9";
@@ -95,7 +99,9 @@
     packages = with pkgs; [
       git
       zip
+      niv
       gcc
+      swww
       unzip
       neovim
       ripgrep
@@ -108,11 +114,6 @@
       rose-pine-cursor
       pkgs-unstable.zig
       google-chrome-stable
-
-      # LSP
-      #lua-language-server
-      #clang-tools
-      #zls
     ];
   };
 
@@ -134,6 +135,7 @@
     niri
     mako
     btop
+    sbctl
     fuzzel
     waybar
     wlogout
@@ -156,6 +158,7 @@
 
   # Install niri.
   programs.niri.enable = true;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

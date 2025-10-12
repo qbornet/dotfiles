@@ -22,6 +22,14 @@
       url = "github:ghostty-org/ghostty";
     };
 
+    # Swww repo
+    swww.url = "github:LGFae/swww";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # My dotfiles
     dotfiles = {
       url = "github:qbornet/dotfiles";
@@ -29,7 +37,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
+  outputs = inputs@{ self, nixpkgs, lanzaboote, ... }:
   let
     system = "x86_64-linux";
     chrome = inputs.browser-previews.packages.${system}.google-chrome;
@@ -39,6 +47,7 @@
         default = final: prev: {
           google-chrome-stable = chrome;
           ghostty = inputs.ghostty.packages.${system}.default;
+          swww = inputs.swww.packages.${system}.swww;
         };
       };
 
@@ -58,6 +67,9 @@
               self.overlays.default
             ];
           }
+
+          # Import lanzaboote module
+          lanzaboote.nixosModules.lanzaboote
 
           ./configuration.nix
 
