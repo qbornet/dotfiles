@@ -105,8 +105,10 @@ layout {
     }
 }
 
+spawn-at-startup "swww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-sh-at-startup "swww img ~/Pictures/wp/gif/Heartbeat.gif"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
