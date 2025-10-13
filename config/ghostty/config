@@ -38,7 +38,7 @@ mouse-hide-while-typing = true
 scrollback-limit = 1000000
 keybind = ctrl+b>n=new_window
 keybind = ctrl+b>c=new_tab
-keybind = ctrl+b>x=close_tab
+keybind = ctrl+b>x=close_surface
 
 keybind = ctrl+b>1=goto_tab:1
 keybind = ctrl+b>2=goto_tab:2

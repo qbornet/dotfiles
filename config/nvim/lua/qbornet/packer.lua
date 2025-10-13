@@ -22,26 +22,13 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
-    if Distro == "Ubuntu" then
-
-        use {
-            'navarasu/onedark.nvim',
-            run = function()
-                pcall(vim.cmd, 'PackerSync')
-            end,
-        }
-
-    else
-
-        use {
-            "rose-pine/neovim",
-            as = "rose-pine",
-            run = function()
-                pcall(vim.cmd, 'PackerSync')
-            end,
-        }
-
-    end
+    use {
+        "rose-pine/neovim",
+        as = "rose-pine",
+        run = function()
+            pcall(vim.cmd, 'PackerSync')
+        end,
+    }
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
@@ -98,6 +85,12 @@ return require('packer').startup(function(use)
     use {
         'nvimtools/none-ls.nvim',
         requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    use {
+        'tadmccorkle/markdown.nvim',
+        config = function()
+            require("markdown").setup({})
+        end,
     }
 	if packer_bootstrap then
 		require('packer').sync()
