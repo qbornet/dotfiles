@@ -14,14 +14,14 @@ input {
 }
 
 output "DP-4" {
-	mode "2560x1440@239.88"
+	mode "2560x1440@239.970"
 	scale 1.0
 	position x=0 y=0
 	focus-at-startup
 }
 
 output "DP-5" {
-	mode "1920x1080@239.66"
+	mode "1920x1080@239.760"
 	scale 1.0
 	position x=-2560 y=0
 }
