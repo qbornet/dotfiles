@@ -38,35 +38,10 @@ local server_configs = {
                 "--clang-tidy-checks=-*,readability-identifier-naming",
                 "--header-insertion=iwyu",
                 "--completion-style=detailed",
-                "--query-driver=/nix/store/**/bin/gcc,/nix/store/**/bin/clang",
+                "--query-driver=/nix/store/**/bin/*gcc*,/nix/store/**/*g++,/nix/store/**/bin/*clang*",
         },
         filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
         root_markers = {'.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', '.git'},
-        on_new_config = function(config, root_dir)
-            -- Auto-generate compile_flags.txt if it doesn't exist
-            local compile_flags_path = root_dir .. "/compile_flags.txt"
-
-            if vim.fn.filereadable(compile_flags_path) == 0 then
-                local glibc_path = vim.fn.system("nix-build '<nixpkgs>' -A glibc.dev --no-out-link 2>/dev/null"):gsub("%s+", "")
-
-                if vim.fn.isdirectory(glibc_path) == 1 then
-                    local flags = {
-                        "-xc",
-                        "-isystem" .. glibc_path .. "/include",
-                    }
-
-                    -- Write compile_flags.txt
-                    local file = io.open(compile_flags_path, "w")
-                    if file then
-                        for _, flag in ipairs(flags) do
-                            file:write(flag .. "\n")
-                        end
-                        file:close()
-                        print("Generated " .. compile_flags_path .. " with default include paths")
-                    end
-                end
-            end
-        end,
     },
     lua_ls = {
         cmd = { 'lua-language-server' },
