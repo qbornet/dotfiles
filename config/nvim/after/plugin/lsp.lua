@@ -38,7 +38,7 @@ local server_configs = {
                 "--clang-tidy-checks=-*,readability-identifier-naming",
                 "--header-insertion=iwyu",
                 "--completion-style=detailed",
-                "--query-driver=/nix/store/**/bin/*gcc*,/nix/store/**/*g++,/nix/store/**/bin/*clang*",
+                "--query-driver=/nix/store/**/bin/*gcc*,/nix/store/**/*g++,/nix/store/**/bin/*clang*,/etc/profiles/per-user/**/bin/*",
         },
         filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
         root_markers = {'.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', '.git'},
@@ -153,7 +153,6 @@ cmp.setup({
 -- none-ls setup for formatting
 local null_ls = require('null-ls')
 local augroup = vim.api.nvim_create_augroup("LspFormating", {})
-local clang_format_file = vim.fn.expand("~/.config/nvim/skeleton/.clang-format")
 
 null_ls.setup({
     debug = false,
@@ -177,7 +176,7 @@ null_ls.setup({
     sources = {
         null_ls.builtins.formatting.clang_format.with({
             extra_args = {
-                "--style=file:" .. clang_format_file,
+                "--style=file"
             },
         }),
     }
