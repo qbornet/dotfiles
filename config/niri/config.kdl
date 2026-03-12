@@ -108,6 +108,8 @@ layout {
 spawn-at-startup "swww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
+spawn-at-startup "flameshot"
 spawn-sh-at-startup "swww img ~/Pictures/wp/gif/Heartbeat.gif"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -189,6 +191,7 @@ binds {
     Mod+P repeat=false { spawn "sh" "-c" "swaylock -C <(cat ~/.config/swaylock/config)"; }
 
 	// Screenshots
+    Mod+Shift+S = { spawn "sh" "-c" "flameshot gui"; }
 	Print { screenshot; }
 	Ctrl+Print { screenshot-screen; }
 	Alt+Print { screenshot-window; }
