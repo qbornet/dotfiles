@@ -70,6 +70,22 @@ local server_configs = {
         filetypes = { 'zig', 'zir' },
         root_markers = { 'zls.json', 'build.zig', '.git' },
     },
+    pyright = {
+        cmd = { "pyright-langserver", "--stdio" },
+        filetypes = { "python" },
+        root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', '.git' },
+        settings = {
+            python = {
+                -- Point pyright to the python3 in your PATH (the Nix wrapper)
+                pythonPath = vim.fn.exepath("python3"),
+                analysis = {
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = true,
+                    diagnosticMode = "workspace",
+                },
+            },
+        },
+    }
 }
 
 -- Function to setup an LSP server
@@ -87,7 +103,7 @@ end
 -- Get list of installed servers from mason-lspconfig
 local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup({
-    ensure_installed = { 'lua_ls', 'clangd', 'zls' },
+    ensure_installed = { 'lua_ls', 'clangd', 'zls', 'pyright' },
 })
 
 -- Get all available servers (Mason-installed + manually specified)
