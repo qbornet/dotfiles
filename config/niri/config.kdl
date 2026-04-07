@@ -109,7 +109,7 @@ spawn-at-startup "swww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
-spawn-at-startup "flameshot"
+spawn-sh-at-startup "wayscriber -d"
 spawn-sh-at-startup "swww img ~/Pictures/wp/gif/Heartbeat.gif"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -184,6 +184,10 @@ binds {
 	Mod+Return repeat=false { spawn "ghostty"; }
 	Mod+D repeat=false { spawn "sh" "-c" "env DISPLAY=:0 fuzzel"; }
 
+	// Wayscriber
+	Mod+W repeat=false { spawn "sh" "-c" "env DIPSLAY=:0 wayscriber --daemon-toggle"; }
+	Mod+Shift+W repeat=false { spawn "sh" "-c" "env DIPSLAY=:0 wayscriber --daemon-toggle --freeze"; }
+
     // Mako keybind
     Ctrl+Space repeat=false { spawn "sh" "-c" "makoctl dismiss -a"; }
 
@@ -191,10 +195,9 @@ binds {
     Mod+P repeat=false { spawn "sh" "-c" "swaylock -C <(cat ~/.config/swaylock/config)"; }
 
 	// Screenshots
-    Mod+Shift+S { spawn "sh" "-c" "flameshot gui"; }
-	Print { screenshot; }
-	Ctrl+Print { screenshot-screen; }
-	Alt+Print { screenshot-window; }
+	Mod+S { screenshot; }
+	Ctrl+S { screenshot-screen; }
+	Mod+Shift+S { screenshot-window; }
 
 	// System
 	Mod+Shift+E { quit; }
@@ -207,6 +210,7 @@ binds {
     XF86AudioMicMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86MonBrightnessUp { spawn "brightnessctl" "set" "10%+"; }
     XF86MonBrightnessDown { spawn "brightnessctl" "set" "10%-"; }
+
 }
 
 //debug {

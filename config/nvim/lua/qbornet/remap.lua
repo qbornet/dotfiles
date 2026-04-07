@@ -17,6 +17,13 @@ vim.keymap.set("n", "<C-W><C-O>", ":lua MaximizeToggle()<CR>", { noremap = true 
 
 -- qol map
 
+-- make map
+
+vim.keymap.set("n", "<leader>cc", ":make<CR>", { noremap = true})
+vim.keymap.set("i", "<F5>", "<Esc>:make<CR>")
+
+-- make map
+
 -- terminal map
 
 -- exit terminal mode
