@@ -20,9 +20,12 @@
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
 
-font-family = Agava Nerd Font
-font-style = default
+font-family = TX-02 Medium SemiCondensed
+font-variation = wdth=90
+font-variation = wght=400
+font-variation = slnt=0
 font-feature = -calt
+font-feature = +ss01
 font-size = 13
 background-opacity = 0.8
 background-blur = true
