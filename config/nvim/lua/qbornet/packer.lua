@@ -78,7 +78,7 @@ return require('packer').startup(function(use)
             },
         },
     }
-    use 'ray-x/go.nvim'
+    use { 'ray-x/go.nvim', tag = 'v0.11' }
     use 'gpanders/nvim-parinfer'
     use { 'm00qek/baleia.nvim', tag = 'v1.4.0' }
     use 'motosir/skel-nvim' -- check the github page for substitution on skeleton
