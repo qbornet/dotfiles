@@ -87,11 +87,14 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     use {
-        'tadmccorkle/markdown.nvim',
+        'MeanderingProgrammer/render-markdown.nvim',
+        after = { 'nvim-treesitter' },
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
         config = function()
-            require("markdown").setup({})
+            require('render-markdown').setup({})
         end,
     }
+    use{ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, }
 	if packer_bootstrap then
 		require('packer').sync()
 	end

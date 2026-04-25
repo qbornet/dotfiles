@@ -70,3 +70,8 @@ vim.keymap.set("n", "<leader>n", require('dap').step_over, { desc = "Next line"}
 --vim.keymap.set("n", "<F5>", ":lua require'dap'.disconnect({ terminateDebugee = true})<CR> | :lua require'dap'.close()<CR>", { silent = true, desc = "Close debuging session"})
 
 -- dap
+
+-- markdown preview
+vim.keymap.set("n", "<leader>mr", ":MarkdownPreview <CR>", { desc = "Start markdown preview server", noremap = true })
+vim.keymap.set("n", "<leader>ms", ":MarkdownPreviewStop <CR>", { desc = "Stop markdown preview server", noremap = true })
+-- markdown preview
