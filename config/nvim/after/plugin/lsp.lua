@@ -211,6 +211,7 @@ null_ls.setup({
                 "--style=file"
             },
         }),
+        null_ls.builtins.diagnostics.golangci_lint,
     }
 })
 
