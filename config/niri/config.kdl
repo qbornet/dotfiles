@@ -110,7 +110,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
 spawn-sh-at-startup "wayscriber -d"
-spawn-sh-at-startup "bash" "-c" "~/.local/bin/wpchose"
+spawn-sh-at-startup "sh" "-c" "/home/qbornet/.local/bin/wpchose"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
