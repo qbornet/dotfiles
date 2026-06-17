@@ -1,38 +1,45 @@
--- Make zsh as bash file type soo treesitter work for both
-vim.api.nvim_create_augroup("zshAsBash", {})
-vim.api.nvim_create_autocmd("BufWinEnter", {
-    group = zshAsBash,
-    pattern = { "*.zsh", "*.sh" },
-    command = "silent! set filetype=sh"
+-- Modern Filetype Mapping
+-- Instead of a clunky autocommand, use the native filetype API to treat .zsh as .sh
+vim.filetype.add({
+    extension = {
+        zsh = "sh",
+    },
 })
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { '<filetype>' },
+
+-- Core Tree-sitter Highlighting
+-- Since 'highlight = { enable = true }' is deprecated in the plugin setup,
+-- this universal autocmd automatically starts Tree-sitter for any supported filetype.
+vim.api.nvim_create_autocmd("FileType", {
     callback = function()
-        pcall(vim.treesitter.start)
+        local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
+        if lang then
+            pcall(vim.treesitter.start)
+        end
     end,
 })
 
-require('nvim-treesitter').setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_install = { "javascript", "typescript", "c", "lua", "bash", "vim", "vimdoc", "query", "go" },
+-- Stripped-down Plugin Configuration
+local has_ts, ts = pcall(require, "nvim-treesitter")
+if has_ts then
+    -- The new setup function takes no heavy module configurations
+    ts.setup({})
 
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
+    -- Programmatic alternative to 'ensure_installed' for unbundled parsers
+    -- (javascript, typescript, and go aren't bundled by default in 0.12)
+    local extra_parsers = { "javascript", "typescript", "go", "c", "cpp", "zig"}
+    
+    local ts_config = pcall(require, "nvim-treesitter.config")
+    local installed = ts_config and require("nvim-treesitter.config").get_installed() or {}
 
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
+    local to_install = {}
+    for _, lang in ipairs(extra_parsers) do
+        if not vim.tbl_contains(installed, lang) then
+            table.insert(to_install, lang)
+        end
+    end
 
-    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-    highlight = {
-        enable = true,
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-}
+    if #to_install > 0 then
+        -- Directly invokes the new install API
+        pcall(ts.install, to_install)
+    end
+end
