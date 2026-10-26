@@ -17,6 +17,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
+vim.filetype.add({
+    extension = {
+        ziggy = "ziggy",
+        ["ziggy-schema"] = "ziggy_schema",
+    },
+})
+
 vim.diagnostic.config({
     virtual_text = false,
     update_in_insert = true,
@@ -102,6 +109,18 @@ local server_configs = {
             },
         },
     },
+    ziggy = {
+        cmd = { "ziggy", "lsp" },
+        filetypes = { "ziggy" },
+        root_markers = {".git"},
+        workspace_required = false,
+    },
+    ziggy_schema = {
+        cmd = { "ziggy", "lsp", "--schema" },
+        filetypes = { "ziggy_schema" },
+        root_markers = {".git"},
+        workspace_required = false,
+    },
 }
 
 -- Function to setup an LSP server
@@ -122,8 +141,20 @@ mason_lspconfig.setup({
     ensure_installed = { 'lua_ls', 'clangd', 'zls', 'pyright', 'gopls' },
 })
 
--- Get all available servers (Mason-installed + manually specified)
+-- Get Mason-installed servers
 local available_servers = mason_lspconfig.get_installed_servers()
+
+-- Register language servers installed outside Mason (NixOS)
+local external_servers = {
+    "ziggy",
+    "ziggy_schema",
+}
+
+for _, server_name in ipairs(external_servers) do
+    if not vim.tbl_contains(available_servers, server_name) then
+        table.insert(available_servers, server_name)
+    end
+end
 
 -- Setup all servers
 for _, server_name in ipairs(available_servers) do
@@ -214,5 +245,3 @@ null_ls.setup({
         null_ls.builtins.diagnostics.golangci_lint,
     }
 })
-
-
