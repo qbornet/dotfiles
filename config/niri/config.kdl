@@ -3,7 +3,7 @@ input {
 
 	keyboard {
 		xkb {
-			layout "us"
+			layout "qwerty-fr"
 			options "ctrl:nocaps"
 		}
 	}
@@ -13,14 +13,14 @@ input {
 	mod-key "Super"
 }
 
-output "DP-4" {
+output "DP-1" {
 	mode "2560x1440@239.970"
 	scale 1.0
 	position x=0 y=0
 	focus-at-startup
 }
 
-output "DP-5" {
+output "DP-2" {
 	mode "1920x1080@239.760"
 	scale 1.0
 	position x=-2560 y=0
@@ -38,15 +38,15 @@ cursor {
 }
 
 workspace "browser" {
-    open-on-output "DP-5"
+    open-on-output "DP-2"
 }
 
 workspace "ghostty" {
-    open-on-output "DP-4"
+    open-on-output "DP-1"
 }
 
 workspace "discord" {
-    open-on-output "DP-4"
+    open-on-output "DP-1"
 }
 
 window-rule {
